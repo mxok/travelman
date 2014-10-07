@@ -11,22 +11,30 @@ class UserManager extends CApplicationComponent {
     public function createUser(RegistrationForm $form) {
         $transaction = Yii::app()->db->beginTransaction();
         try {
+
             $user = new User;
             $data = $form->getAttributes();
             $user->setAttributes($data, false);
+
+
             $user->password = $this->hasher->hashPassword($form->password);
+
             $user->session = Yii::app()->session->sessionID;
+
             $user->md5 = md5(time());
+
             $user->registerDate = date('Y-m-d', time());
+
             if ($user->save()) {
                 if ($this->stateStorage->create($user, $form)) {
-                    $transaction->commit();                    
+                    $transaction->commit();
                     return $user;
                 }
             }
-            throw new CException(Yii::t('UserModule.user', 'Error creating account!'));
+           throw new CException(Yii::t('UserModule.user', 'Error creating account!'));
         }
         catch(Exception $e) {
+
             $transaction->rollback();
             
             return false;
