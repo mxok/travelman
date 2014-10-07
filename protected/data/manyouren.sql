@@ -124,12 +124,6 @@ CREATE TABLE travel_photo_comment(
   `replyId`           INT UNSIGNED  NULL DEFAULT 0 COMMENT '0表示这是新的评论，否则表示的是回复',
   CONSTRAINT `photocomment` FOREIGN KEY (`photoId`) REFERENCES `travel_photo` (`photoId`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-
-
-
-
-
 -- *
 --  *
 --  *
@@ -138,11 +132,6 @@ CREATE TABLE travel_photo_comment(
 --  *
 --  *
 --  * 对这个地点点赞还是对人点赞。点赞功能暂时关闭
- 
-
-
-
-
 -- 有如下的变化：
 -- 1.sessionID变成了session
 -- 2.flightNumber变成了flight
@@ -153,5 +142,4 @@ CREATE TABLE travel_photo_comment(
 -- UserExt['signText']变成了User['signText']
 -- )
 -- 7.修改经纬度与当前城市变成了StateForm['latitude'],不在是UserStatus['latitude']
-
-注册：avatar 变成了avatar0。
+-- 注册：avatar 变成了avatar0。
