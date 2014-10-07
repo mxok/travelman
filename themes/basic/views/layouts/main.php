@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
 	<!-- blueprint CSS framework -->
+    <?php Yii::app()->bootstrap->register(); ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/s.css"  />
@@ -32,7 +33,7 @@
 				array('label'=>'推送模块','url'=>array('/index/push')),
 				array('label'=>'捡人模块','url'=>array('/index/jianren')),
 				array('label'=>'后台管理模块(慎用)','url'=>array('/backend/')),
-					array('label'=>'消息提醒模块','url'=>array('/message/')),
+				array('label'=>'消息提醒模块','url'=>array('/message/')),
 				array('label'=>'登录', 'url'=>array('/user/default/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'退出登录 ('.Yii::app()->user->name.')', 'url'=>array('/user/default/logout'),'visible'=>!Yii::app()->user->isGuest)
 			),

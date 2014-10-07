@@ -21,7 +21,7 @@ CREATE TABLE travel_user(
   `profession`  VARCHAR(20)   DEFAULT '' COMMENT  '职业',
   `company`     VARCHAR(20)   DEFAULT '' COMMENT  '公司',
   `md5`         CHAR(32)      NOT NULL   COMMENT 'md5值.用来判断用户的资料或者Plan等是否有变化',
-  `avatar0`     VARCHAR(255) DEFAULT '',
+  `avatar0`     VARCHAR(255)  DEFAULT '',
   `avatar1`     VARCHAR(255)DEFAULT '',
   `avatar2`     VARCHAR(255)DEFAULT '',
   `avatar3`     VARCHAR(255)DEFAULT ''

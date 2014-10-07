@@ -1,20 +1,16 @@
-
-      <?php $form = $this->beginWidget('CActiveForm') ?>
+<?php $form = $this->beginWidget('CActiveForm')?>
 <table class="table">
     <tr >
         <td class="th" colspan="10">用户登录</td>
     </tr>
-
-
-
     <tr>
         <td><?php
             echo $form->labelEx($loginForm, 'type') ?></td>
         <td>
             <?php
-            echo $form->textField($loginForm, 'type', array('value' => '0')) ?>
+            echo $form->textField($loginForm,'type',array('value' => '0')) ?>
             <?php
-            echo $form->error($loginForm, 'type') ?>
+            echo $form->error($loginForm,'type') ?>
         </td>
     </tr>
     <tr>
@@ -54,7 +50,7 @@
         </td>
     </tr>
      <tr>
-        <td colspan="10"><input type="submit" class="input_button" value="登录"/></td>
+        <td colspan="10"><input type="submit" class="input_button" value="登 录"/></td>
     </tr>
     <?php $this->endWidget() ?>
    

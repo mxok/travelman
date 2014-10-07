@@ -13,7 +13,8 @@ return array(
         'application.models.*',
         'application.components.*',
         'application.vendors.*',
-        'bootstrap.helpers.TbHtml',
+        'bootstrap.helpers.*',
+        'bootstrap.behaviors.*',
     ),
     'modules' => array(
        'user',

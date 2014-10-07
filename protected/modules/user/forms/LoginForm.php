@@ -18,7 +18,7 @@ class LoginForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('username,password,type','required','message'=>Yii::t('UserModule.user','{attribute} should  not  black')),
+			array('username,password,type','required','message'=>Yii::t('UserModule.user','{attribute} should  not be black')),
 			array('latitude,longitude,currentCity','safe'),
 			array('password', 'authenticate'),
 		);
