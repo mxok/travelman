@@ -5,8 +5,8 @@ class UserManager extends CApplicationComponent {
     public $user;
     public $stateStorage;
     public function init() {
-        $this->hasher = new Hasher();
-        $this->stateStorage = new StateStorage();
+        $this->hasher =Yii::createComponent('application.modules.user.components.Hasher');
+        $this->stateStorage=Yii::createComponent('application.modules.user.components.StateStorage');
     }
     public function createUser(RegistrationForm $form) {
         $transaction = Yii::app()->db->beginTransaction();
@@ -15,8 +15,6 @@ class UserManager extends CApplicationComponent {
             $user = new User;
             $data = $form->getAttributes();
             $user->setAttributes($data, false);
-
-
             $user->password = $this->hasher->hashPassword($form->password);
 
             $user->session = Yii::app()->session->sessionID;

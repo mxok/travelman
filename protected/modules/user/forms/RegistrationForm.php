@@ -29,13 +29,14 @@ class RegistrationForm extends CFormModel{
             'gender' =>Yii::t('UserModule.user', 'gender'),
             'residence' =>Yii::t('UserModule.user', 'residence'),
             'birthday' =>Yii::t('UserModule.user', 'birthday'),
-            'avatar' => Yii::t('UserModule.user', 'avatar'),
+            'avatar0' => Yii::t('UserModule.user', 'avatar'),
         );
     }
     public function authenticate($attribute, $params) {
         $model= User::model()->find('email=:email', array(':email' => $this->email));
         if ($model) {
             $this->addError('email',Yii::t('UserModule.user', 'email already has  been  registered'));
+
              Yii::app()->getController()->send(ERROR_EMAIL_HAS,Yii::t('UserModule.user', 'email already has  been  registered'));           
         }
     }

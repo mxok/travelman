@@ -12,15 +12,6 @@ class PublishController extends Controller {
             ) ,
         );
     }
-    public function behaviors() {
-         parent::init();
-        return array_merge(parent::behaviors() , array(
-            'UploadBehavior' => array(
-                'class' => 'ext.behavior.UploadBehavior',
-                'savePath' => $this->savePath,
-            )
-        ));
-    }
     public function actionIndex() {
         $plan = $this->initParams('Plan', 'new', 'publish');
         $this->multiImageUpload($plan);

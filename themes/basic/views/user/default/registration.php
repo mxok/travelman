@@ -91,12 +91,12 @@ echo $form->error($registration, 'birthday') ?>
             </tr>
             <tr>
                 <td><?php
-echo $form->labelEx($registration, 'avatar') ?></td>
+echo $form->labelEx($registration, 'avatar0') ?></td>
                 <td>
 <?php
-echo $form->fileField($registration, 'avatar') ?>
+echo $form->fileField($registration, 'avatar0') ?>
 <?php
-echo $form->error($registration, 'avatar') ?>
+echo $form->error($registration, 'avatar0') ?>
                 </td>
             </tr>
                 </td>

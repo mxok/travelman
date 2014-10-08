@@ -36,7 +36,9 @@ class Hasher extends CApplicationComponent
         if(md5($password)==$hash){
             return  true;
         }
-        return CPasswordHelper::verifyPassword($password, $hash);
+
+        return  false;
+//        return CPasswordHelper::verifyPassword($password, $hash);
     }
 
 }

@@ -34,10 +34,8 @@ class UploadBehavior extends CBehavior {
      * @return string                缩略图的文件名
      */
     private function saveThumb($imageName,$extensionName) {
-  
         $thumb = Yii::app()->thumb;
         $thumb->image = $this->savePath. $imageName.$extensionName;
-	
         $size=getimagesize($thumb->image);
         $width=$size[0];
         $height=$size[1];
@@ -57,10 +55,12 @@ class UploadBehavior extends CBehavior {
      * @param array  $array  上传表单的attribute
      */
     public function upload($model, $array = array()) {
-        $files = array();    
-        foreach ($array as $index => $attribute) {
+        $files = array();
+
+
+                  foreach ($array as $index => $attribute) {
             $attach = CUploadedFile::getInstance($model, $attribute);
-			
+
             if ($attach) {
                 if(isset(YII::app()->user->userId)){
                    $prefix= YII::app()->user->userId.time().$index . '.';  

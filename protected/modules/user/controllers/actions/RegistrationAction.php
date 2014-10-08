@@ -4,8 +4,11 @@ class RegistrationAction extends CAction {
     public function run() {
         $form = new RegistrationForm();
         if (isset($_FILES['RegistrationForm'])) {
+
             $this->controller->upload($form, array('avatar0'));
         }
+
+
         if (($data = Yii::app()->getRequest()->getPost('RegistrationForm')) !== null) {
             $form->setAttributes($data);
             if ($form->validate()) {
@@ -16,7 +19,7 @@ class RegistrationAction extends CAction {
                     $profile['sessionID'] = Yii::app()->session->sessionID;
                     $this->controller->send(0, $profile);
                 } else {
-                    $this->controller->send(ERROR_FATAL, Yii::t('UserModule.user', 'register failure'));
+                    $this->controller->send(ERROR_FATAL,Yii::t('UserModule.user', 'register failure'));
                 }
             } else {
                 $this->controller->error->capture($form);

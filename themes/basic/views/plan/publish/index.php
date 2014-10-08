@@ -50,14 +50,21 @@ $form = $this->beginWidget('CActiveForm', array('htmlOptions'=>array('enctype'=>
             <?php echo $form->error($model, 'city') ?>
         </td>
     </tr>
-    
-    
-    
-    
-    
-    
-    
-    
+
+    <tr>
+        <td><?php echo $form->labelEx($model, 'startCity') ?></td>
+        <td>
+            <?php echo $form->textField($model, 'startCity') ?>
+            <?php echo $form->error($model, 'startCity') ?>
+        </td>
+    </tr>
+
+
+
+
+
+
+
     <tr>
         <td><?php echo $form->labelEx($model, 'together') ?></td>
         <td>
@@ -127,9 +134,9 @@ $form = $this->beginWidget('CActiveForm', array('htmlOptions'=>array('enctype'=>
         <?php echo $form->error($model,'images'); ?>
     </tr>
     <tr>
-        <td><?php echo $form->labelEx($model, 'flightNumber') ?></td>
+        <td><?php echo $form->labelEx($model, 'flight') ?></td>
         <td>
-            <?php echo $form->textField($model, 'flightNumber') ?>
+            <?php echo $form->textField($model, 'flight') ?>
 
         </td>
     </tr>

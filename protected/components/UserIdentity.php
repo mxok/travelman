@@ -17,17 +17,17 @@ class UserIdentity extends CUserIdentity {
         ));
         if ($this->user == null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-            
+
             return false;
         }
         if (!Yii::app()->userManager->hasher->checkPassword($this->password, $this->user->password)) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            
+
             return false;
         }
 
         $this->errorCode = self::ERROR_NONE;
-        
+
         return true;
     }
 }

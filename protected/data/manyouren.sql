@@ -133,13 +133,13 @@ CREATE TABLE travel_photo_comment(
 --  *
 --  * 对这个地点点赞还是对人点赞。点赞功能暂时关闭
 -- 有如下的变化：
--- 1.sessionID变成了session
 -- 2.flightNumber变成了flight
 -- 3.likeNum变成了like
 -- 4.commentNum 变成了comment
 -- 5.relationType变成了type
 -- 6.取消了头像表和extension表，用户修改个人资料和头像设置将会影响到(比如：Avatar['avatar0']将变成User['avatar0']，
 -- UserExt['signText']变成了User['signText']
+--登录LoginForm[email]变成了LoginForm[username]
 -- )
 -- 7.修改经纬度与当前城市变成了StateForm['latitude'],不在是UserStatus['latitude']
 -- 注册：avatar 变成了avatar0。
