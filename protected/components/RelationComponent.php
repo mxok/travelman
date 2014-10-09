@@ -9,8 +9,10 @@
 
 class RelationComponent {
     public $userId;
+    public $criteria;
     public function __construct() {
         $this->userId = Yii::app()->user->userId;
+        $this->criteria=new CDbCriteria();
     }
     public function getFriends() {
         $friends = array_intersect($this->getFans() , $this->getFollows());
@@ -19,36 +21,36 @@ class RelationComponent {
         return $friends;
     }
     public function getFans() {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('priUserId=' . $this->userId);
-        $criteria->addCondition('relationType=1');
-        $criteria->addNotInCondition('subUserId', $this->getBlacks());
-        
-        return $this->getArray($criteria);
+
+        $this->criteria->addCondition('subUserId='.$this->userId);
+        $this->criteria->addCondition('type=1');
+        return $this->getArray($this->criteria);
     }
     public function getFollows() {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('subUserId=' . $this->userId);
-        $criteria->addCondition('relationType=1');
-        $criteria->addNotInCondition('subUserId', $this->getBlacks());
-        
-        return $this->getArray($criteria);
+
+        $this->criteria->addCondition('priUserId=' . $this->userId);
+        $this->criteria->addCondition('type=1');
+        return $this->getArray($this->criteria);
     }
-    public function getBlacks() {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('subUserId=' . $this->userId);
-        $criteria->addCondition('relationType=0');
-        
-        return $this->getArray($criteria);
+
+    /**
+     *      这个是得到某人的黑名单
+     * * @param $userId
+     * @return array
+     */
+    public function getBlacks($userId) {
+        $this->criteria->addCondition('priUserId='.$userId);
+        $this->criteria->addCondition('type=0');
+        return $this->getArray($this->criteria);
     }
     private function getArray(CDbCriteria $criteria) {
         $result = Relation::model()->findAll($criteria);
-        $primaryKeys = array();
+        $users = array();
         
         foreach ($result as $value) {
-            array_push($primaryKeys, $value->primaryKey);
+            array_push($users, $value->subUserId);
         }
         
-        return $primaryKeys;
+        return array_values($users);
     }
 }

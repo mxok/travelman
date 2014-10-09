@@ -8,6 +8,7 @@
  */
 class Plan extends CActiveRecord
 {
+
     public static function model($className = __CLASS__)
     {
 
@@ -42,20 +43,19 @@ class Plan extends CActiveRecord
                 'planId',
                 'required',
                 'on' => 'detail',
-                'message' => Yii::t('PlanModule.plan', '{attribute} should  not  be black')
+                'message' => Yii::t('PlanModule.plan','{attribute} should  not  be black')
             ),
             array(
-                'planId',
+                'userId',
                 'required',
                 'on' => 'list',
-                'message' => Yii::t('PlanModule.plan', '{attribute} should  not  be black')
+                'message' => Yii::t('PlanModule.plan','{attribute} should  not  be black')
             ),
         );
     }
 
     public function attributeLabels()
     {
-
         return array(
             'planId' => Yii::t('PlanModule.plan', 'planId'),
             'destination' => Yii::t('PlanModule.plan', 'destination'),
@@ -73,20 +73,14 @@ class Plan extends CActiveRecord
 
     public function relations()
     {
-
         return array(
-            'plan' => array(
-                self::BELONGS_TO,
-                'plan',
-                'planId'
-            ),
-
+            'user' => array(self::BELONGS_TO,   'User',   'userId'),
+            'state'=>array(self::BELONGS_TO,   'UserState',   'userId'),
         );
     }
 
     public function behaviors()
     {
-
         return array(
             'CTimestampBehavior' => array(
                 'class' => 'zii.behaviors.CTimestampBehavior',
@@ -96,16 +90,16 @@ class Plan extends CActiveRecord
                 'class' => 'ext.behavior.NearScopeBehavior',
                 'latitude' => Yii::app()->user->latitude,
                 'longitude' => Yii::app()->user->longitude,
+
             )
         );
     }
-
     public function scopes()
     {
 
         return array(
             'unexpired' => array(
-                'condition' => 'DATEDIFF(endDate,' . '\'' . date('Y-m-d') . '\'' . ')>=0',
+                'condition' => 'DATEDIFF(endDate,' . '\'' .date('Y-m-d') . '\''.')>=0',
                 'order' => 'planId DESC'
             ),
         );
@@ -124,32 +118,22 @@ class Plan extends CActiveRecord
             $this->userId = Yii::app()->user->userId;
 
         }
-
         return true;
-
     }
-
-    private function addCondition(CFormModel & $condition)
+    private function search(CFormModel & $condition)
     {
         $criteria = new CDbCriteria();
-        if ($condition->gender == '0' || $condition->gender == '1') {
-            $criteria->addCondition('gender=' . $condition->gender);
-        }
-        if (!empty($condition->location)) {
-            //這里应该分词搜索的
-            $criteria->addCondition('destination  like  \'%' . $condition->location . '%\'  OR  ' . '  city  like  \'%' . $condition->location . '%\'');
-
-        }
+        $criteria->compare('destination', $condition->location, true);
+        $criteria->compare('gender', $condition->gender, false);
         if ($condition->residence == '0' || $condition->residence == '1') {
-
             switch ($condition->residence) {
                 case '0':
-                    $criteria->addCondition('residence=' . '\'' . Yii::app()->plan->currentCity . '\'');
+                   $criteria->compare('residence',Yii::app()->user->currentCity,true);
                     break;
 
-                case '1':
-                    $criteria->addCondition('residence!=' . '\'' . Yii::app()->plan->currentCity . '\'');
-                    break;
+               case '1':
+                   $criteria->compare('residence','<>'.Yii::app()->user->currentCity,true);
+                   break;
 
                 default:
                     break;
@@ -158,6 +142,11 @@ class Plan extends CActiveRecord
 
         return $criteria;
     }
+
+
+
+
+
 
     /**
      *
@@ -168,14 +157,12 @@ class Plan extends CActiveRecord
      */
     public function getDataProvider(CFormModel & $condition)
     {
-        $latitude = Yii::app()->plan->latitude;
-        $longitude = Yii::app()->plan->longitude;
-        $dataProvider = new CActiveDataProvider(Plan::model()->unexpired()->near()->with('plan'), array(
-            'pagination' => array(
+        $dataProvider = new CActiveDataProvider(Plan::model()->unexpired()->near()->with(array('user','state')), array(
+                'pagination' => array(
                 'pageSize' => 20,
             ),
         ));
-        $dataProvider->setCriteria($this->addCondition($condition));
+        $dataProvider->setCriteria($this->search($condition));
         return $dataProvider;
     }
 
@@ -193,4 +180,7 @@ class Plan extends CActiveRecord
 
         return $dataProvider;
     }
+
+
+
 }

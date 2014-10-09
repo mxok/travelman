@@ -16,6 +16,7 @@ class RefreshController extends Controller {
             if ($form->validate()) {
                 if(Yii::app()->userManager->stateStorage->stateChange(Yii::app()->user->userId, $form->attributes)){
                    $this->send(0, Yii::t('UserModule.user', 'refresh  success'));
+
                 };               
             } else {
                 $this->error->capture($form);

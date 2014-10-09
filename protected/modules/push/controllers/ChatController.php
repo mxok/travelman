@@ -31,7 +31,7 @@ class ChatController extends Controller {
         	if($message->validate()){        	
         	  $message->file = $this->upload($message);
 
-                if(UserStatus::model()->findByPk($message->receiver)->type==0){
+                if(UserState::model()->findByPk($message->receiver)->type==0){
                     $message->chat('android');
                 }
                else{

@@ -7,7 +7,7 @@
  */
 Yii::import('application.vendors.*');
 require_once('jpush/JPushClient.php');
-define ("PUSH_SINGLE", 3);
+define ("PUSH_SINGLE", 2);
 define ("PUSH_ALL", 4);
 
 class JPush

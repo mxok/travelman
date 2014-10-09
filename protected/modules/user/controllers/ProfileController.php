@@ -19,9 +19,9 @@ class ProfileController extends Controller {
         $model = null;
         if ($model == null) {
             if (isset($_POST['User']['userId'])) {
-                $model = User::model()->with(array('avatar','extension'))->findByPk($_POST['User']['userId'])->getUser();
+                $model = User::model()->findByPk($_POST['User']['userId']);
             } else {
-                $model = User::model()->with(array('avatar','extension'))->findByPk(YII::app()->user->userId)->getUser();
+                $model = User::model()->findByPk(YII::app()->user->userId);
             }
             if ($model === null) {
                 throw new CHttpException(404, '您访问的用户不存在');

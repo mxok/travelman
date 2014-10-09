@@ -3,6 +3,8 @@
 class RegistrationAction extends CAction {
     public function run() {
         $form = new RegistrationForm();
+
+
         if (isset($_FILES['RegistrationForm'])) {
 
             $this->controller->upload($form, array('avatar0'));
@@ -14,7 +16,8 @@ class RegistrationAction extends CAction {
             if ($form->validate()) {
                 if ($user = Yii::app()->userManager->createUser($form)) {
                     Yii::app()->user->login(new UserIdentity($form->username,$form->password),0);
-                    Yii::app()->userManager->stateStorage->stateChange($user->userId,array('residence' => $form->residence));
+                    Yii::app()->userManager->stateStorage->stateChange($user->userId,
+                        array('residence' => $form->residence));
                     $profile = Yii::app()->userManager->getProfile($user);
                     $profile['sessionID'] = Yii::app()->session->sessionID;
                     $this->controller->send(0, $profile);

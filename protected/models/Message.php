@@ -45,9 +45,9 @@ class Message extends CFormModel {
         $this->sender = Yii::app()->user->userId;
         $jPush = new JPush($platform);
         if ($jPush->sendSingle($this->attributes)) {
-            $this->send(0, Yii::t('UserModule.user','success'));
+            Yii::app()->getController()->send(0,Yii::t('UserModule.user', 'success'));
         } else {
-            $this->send(1, Yii::t('UserModule.user','fail'));
+            Yii::app()->getController()->send(1,Yii::t('UserModule.user', 'fail'));
         }
     }
 }

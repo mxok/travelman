@@ -20,13 +20,13 @@ class NearScopeBehavior extends CActiveRecordBehavior {
          */
         if ($this->enableDistance) {
             $select = 't.*,   (ACOS(SIN((' . $this->latitude . '* 3.1415) / 180 ) 
-                          *SIN((travel_user_status.latitude * 3.1415) / 180 ) 
+                          *SIN((travel_user_state.latitude * 3.1415) / 180 ) 
         	              +COS((' . $this->latitude . '* 3.1415) / 180 ) * 
-        	               COS((travel_user_status.latitude * 3.1415) / 180 ) *
+        	               COS((travel_user_state.latitude * 3.1415) / 180 ) *
         	               COS((' . $this->longitude . '* 3.1415) / 180 - 
-        		           (travel_user_status.longitude * 3.1415) / 180 ) ) * 6378.137)  
+        		           (travel_user_state.longitude * 3.1415) / 180 ) ) * 6378.137)  
         		           as distance';
-            $join = 'LEFT JOIN travel_user_status ON travel_user_status.userId=t.userId';
+            $join = 'LEFT JOIN travel_user_state ON travel_user_state.userId=t.userId';
             $this->Owner->getDbCriteria()->mergeWith(array(
                 'select' => $select,
                 'join' => $join

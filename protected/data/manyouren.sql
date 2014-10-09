@@ -43,7 +43,7 @@ CREATE TABLE travel_user_state(
   `priUserId`        INT UNSIGNED  NOT NULL COMMENT ' 主用户id,凡是我的操作我就是主',
   `subUserId`       INT UNSIGNED  NOT NULL,
   `type`             TINYINT(1) NOT NULL COMMENT '0表示这是被拉黑，1表示是关注',
- ` createTime`       INT UNSIGNED     NOT NULL COMMENT '发生关系的时间',
+ `createTime`       INT UNSIGNED     NOT NULL COMMENT '发生关系的时间',
   PRIMARY KEY (`priUserId`, `subUserId`,`type`)
   );
 CREATE TABLE travel_plan(

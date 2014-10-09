@@ -13,6 +13,8 @@ class DefaultController extends Controller {
         );
     }
     public function actionIndex() {
+
+
         $plan = Plan::model();
         $searchForm = $this->initParams('SearchForm', 'new');
         $dataProvider = $plan->getDataProvider($searchForm);

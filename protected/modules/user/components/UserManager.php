@@ -11,16 +11,12 @@ class UserManager extends CApplicationComponent {
     public function createUser(RegistrationForm $form) {
         $transaction = Yii::app()->db->beginTransaction();
         try {
-
             $user = new User;
             $data = $form->getAttributes();
             $user->setAttributes($data, false);
             $user->password = $this->hasher->hashPassword($form->password);
-
             $user->session = Yii::app()->session->sessionID;
-
             $user->md5 = md5(time());
-
             $user->registerDate = date('Y-m-d', time());
 
             if ($user->save()) {
@@ -40,10 +36,10 @@ class UserManager extends CApplicationComponent {
     }
     public function getProfile(User $user) {
         $age = $this->getAge($user);
-        
         $data= array_merge(array(
             'age' => $age,
-            'residence' => $user->state->residence
+            'residence' => $user->state->residence,
+            'distance'=>$user->distance,
         ) , $user->attributes);
 
         unset($data['session']);
@@ -63,5 +59,23 @@ class UserManager extends CApplicationComponent {
         
         return $age . '';
     }
+
+
+
+
+      public   function    checkEmail($email){
+
+          $model= User::model()->find('email=:email', array(':email' =>$email));
+          if ($model) {
+              Yii::app()->getController()->send(ERROR_EMAIL_HAS,Yii::t('UserModule.user', 'email already has  been  registered'));
+              return  false;
+          }
+
+          else{
+              Yii::app()->getController()->send(ERROR_NONE,Yii::t('UserModule.user', 'email not has  been  registerted'));
+
+          }
+
+      }
 }
 ?>

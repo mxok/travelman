@@ -107,7 +107,7 @@ function format($data, $more = true,$extra=array()) {
         return array_merge($data->attributes, Yii::app()->userManager->getProfile($data->user));
     } else if ($data instanceof User) {
         
-        return $data->user;
+        return Yii::app()->userManager->getProfile($data);
     }
     
     return $data;

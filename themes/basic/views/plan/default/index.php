@@ -17,15 +17,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'endDate',
         array(
             'name' => '用户头像',
-            'value' => '
-            CHtml::image(
-            "/manyouren/uploads/".$data->user->avatar->getDefaultAvatar()["avatar0"],"",
-            array("width"=>130,"height"=>130))', //这里显示图片
-            'type' => 'raw', //这里是原型输出
-            'htmlOptions' => array(
-                'width' => '200',
-                'style' => 'text-align:center',
-            ) ,
+//            'value' => '
+//            CHtml::image(
+//            "/manyouren/uploads/".$data->user->avatar->getDefaultAvatar()["avatar0"],"",
+//            array("width"=>130,"height"=>130))', //这里显示图片
+//            'type' => 'raw', //这里是原型输出
+//            'htmlOptions' => array(
+//                'width' => '200',
+//                'style' => 'text-align:center',
+//            ) ,
         ) ,
         array( // display a column with "view", "update" and "delete" buttons
             'class' => 'CButtonColumn',

@@ -20,11 +20,11 @@
                 <td>
                     <?php
                     echo $form->radioButtonList(
-                            $relation, 'relationType', array(0 => '拉黑', 1 => '关注'), array('separator' => '&nbsp')
+                            $relation, 'type', array(0 => '拉黑', 1 => '关注'), array('separator' => '&nbsp')
                     )
 
                     ?>
-                    <?php echo $form->error($relation, 'relationType') ?>
+                    <?php echo $form->error($relation, 'type') ?>
                 </td>
             </tr>
             <tr>
@@ -33,7 +33,7 @@
 
             <tr>
                 <td><label>
-                        特别说明：0表示拉黑，1表示关注
+                        特别说明：0表示拉黑，1表示关注。拉黑以后请不要关注
                     </label>
                 </td>
                 <td>

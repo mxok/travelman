@@ -20,11 +20,11 @@
                 <td>
                     <?php
                     echo $form->radioButtonList(
-                            $relation, 'relationType', array(0 => '取消拉黑', 1 => '取消关注'), array('separator' => '&nbsp')
+                            $relation, 'type', array(0 => '取消拉黑', 1 => '取消关注'), array('separator' => '&nbsp')
                     )
 
                     ?>
-                    <?php echo $form->error($relation, 'relationType') ?>
+                    <?php echo $form->error($relation, 'type') ?>
                 </td>
             </tr>
             <tr>

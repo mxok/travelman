@@ -8,26 +8,14 @@
     }
     public function tableName() {
         
-        return '{{user_meta}}';
+        return '{{user}}';
     }
     public function relations() {
         
         return array(
-            'extension' => array(
-                self::HAS_ONE,
-                'UserExt',
-                'userId'
-            ) ,
-            'status' => array(
-                self::HAS_ONE,
-                'UserStatus',
-                'userId'
-            ) ,
-            'avatar' => array(
-                self::HAS_ONE,
-                'Avatar',
-                'userId'
-            )
+
+            'state' => array(self::HAS_ONE, 'UserState', 'userId')
+
         );
     }
 
@@ -42,19 +30,7 @@
             )
         );
     }
-    /**
-     * getUser 返回的是一个数组，而非一个对象
-     * @return array
-     */
-    public function getUser() {
-       $this->age = $this->getAge();
-        return array_merge(array(
-            'age'=>$this->age,
-            'gender' => $this->gender,
-            'residence' => $this->residence,
-            'distance'=>$this->distance,
-        ) , $this->extension->attributes, $this->avatar->attributes);
-    }
+
     private function addCondition(CFormModel & $condition)
     {        
         $criteria = new CDbCriteria();
@@ -105,7 +81,7 @@
         return $dataProvider;
     }
   private function getAge() {
-        $birthday = $this->extension->birthday;
+        $birthday = $this->birthday;
         $age = date('Y', time()) - date('Y', strtotime($birthday)) - 1;
         if (date('m', time()) == date('m', strtotime($birthday))) {
 

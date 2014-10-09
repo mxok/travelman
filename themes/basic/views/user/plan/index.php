@@ -3,7 +3,7 @@ $form = $this->beginWidget('CActiveForm', array('htmlOptions'=>array('enctype'=>
 ?>
 <table class="table">
     <tr >
-        <td class="th" colspan="10">查看个人发布的分享</td>
+        <td class="th" colspan="10">查看个人发布的计划</td>
     </tr>
     <tr>
         <td><?php echo $form->labelEx($model, 'userId') ?></td>

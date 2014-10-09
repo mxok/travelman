@@ -34,17 +34,26 @@ class StateStorage extends CApplicationComponent {
      * @return
      */
     public function stateChange($userId, array $data) {
+      $username= User::model()->findByPk($userId)->username;
+      $avatar0=User::model()->findByPk($userId)->avatar0;
+
         $model = UserState::model()->findByPk($userId);
         if (array_key_exists('userId', $data)) {
             unset($data['userId']);
         }
         $model->attributes = $data;
         if (!empty($model->attributes)) {
-            $model->save();           
-            foreach ($model->attributes as $key => $value) {
+            $model->save();
+            $data=$model->attributes;
+            $data['username']=$username;
+            $data['avatar0']=$avatar0;
+            foreach ($data as $key => $value) {
                 Yii::app()->user->setState($key, $value);
             }
+
+            return  true;
         }
+
     }
     //如果没有设置，将在数据库中去查找，问题在于,Userid如何找到
     public function __get($name) {
