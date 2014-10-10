@@ -32,26 +32,18 @@
     }
 
     private function addCondition(CFormModel & $condition)
-    {        
+    {
         $criteria = new CDbCriteria();
-        //不用empty的原因是因为值为0empty照样是空
-        if ($condition->gender=='0'||$condition->gender=='1') {
-
-            $criteria->addCondition('gender=' . $condition->gender);
-        }
-        if ($condition->location !== null) {
-            //這里应该分词搜索的
-            $criteria->compare('destination', $condition->location, true);
-        }
-        if ($condition->residence !== null) {
-
+        $criteria->compare('destination', $condition->location, true);
+        $criteria->compare('gender', $condition->gender, false);
+        if ($condition->residence == '0' || $condition->residence == '1') {
             switch ($condition->residence) {
-                case 0:
-                    $criteria->addCondition('residence=' . '\'' . Yii::app()->user->currentCity . '\'');
+                case '0':
+                    $criteria->compare('residence',Yii::app()->user->currentCity,true);
                     break;
 
-                case 1:
-                    $criteria->addCondition('residence!=' . '\'' . Yii::app()->user->currentCity . '\'');
+                case '1':
+                    $criteria->compare('residence','<>'.Yii::app()->user->currentCity,true);
                     break;
 
                 default:
