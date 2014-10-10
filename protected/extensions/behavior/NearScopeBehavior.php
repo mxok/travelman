@@ -18,6 +18,7 @@ class NearScopeBehavior extends CActiveRecordBehavior {
          * t*的原因是因为不管有多少个查询条件，select只有一个（select最先计算，后面的懒加载都是以这个为标准的
          * join不影响的原因是因为懒加载。
          */
+
         if ($this->enableDistance) {
             $select = 't.*,   (ACOS(SIN((' . $this->latitude . '* 3.1415) / 180 ) 
                           *SIN((travel_user_state.latitude * 3.1415) / 180 ) 

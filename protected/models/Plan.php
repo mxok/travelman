@@ -163,6 +163,7 @@ class Plan extends CActiveRecord
             ),
         ));
         $dataProvider->setCriteria($this->search($condition));
+
         return $dataProvider;
     }
 

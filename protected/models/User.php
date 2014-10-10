@@ -28,6 +28,7 @@ class User extends CActiveRecord {
 
 
     protected   function   beforeFind(){
+
    parent::beforeFind();
         if(isset(Yii::app()->user->latitude,Yii::app()->user->longitude)){
 
