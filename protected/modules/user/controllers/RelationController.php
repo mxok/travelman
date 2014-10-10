@@ -39,23 +39,38 @@ public function init(){
     }
     //删除某个关系:取消关注，取消拉黑
     public function actionCancel() {
-        $this->model->priUserId = Yii::app()->user->userId;
-        if ($this->model->validate()) {
-            $a = $this->model->attributes;
+
+
+
+             $model=new Relation();
+        if (($data = Yii::app()->getRequest()->getPost('Relation')) !== null) {
+            $model->setAttributes($data);
+        if ($model->validate()) {
+            $a = $model->attributes;
+            $a['priUserId']=Yii::app()->user->userId;
             unset($a['createTime']);
-            $model = $this->model->findByPk($a);
-            if ($this->model->delete()) {
+            $model = $model->findByPk($a);
+            if($model!=null){
+            if ($model->delete()) {
                 $this->send(ERROR_NONE, 'success');
             }
+            }
             else{
-                 $this->send(ERROR_FATAL, 'fail,can\'t  find  this  subUserId in  relation table');
+                 $this->send(ERROR_FATAL, 'fail,can\'t  find  this  relation  in  relation table');
             }
         }
         else{
             $this->error->capture($this->model);
         }
+        }
         $this->render('cancel', array('relation' => $this->model));
     }
+
+
+
+
+
+
     public function actionAdd() {
         $model=new Relation();
         if (($data = Yii::app()->getRequest()->getPost('Relation')) !== null) {
@@ -64,9 +79,7 @@ public function init(){
             if ($model->addRelation()) {
                 $this->send(ERROR_NONE, 'success');
             }
-            else{
-                $this->send(ERROR_FATAL, 'fail, can\'t  find  this  subUserId' );
-            }
+
         } else {
             $this->error->capture($model);
         }

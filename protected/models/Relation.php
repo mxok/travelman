@@ -78,10 +78,39 @@ class Relation extends CActiveRecord
 
     public function addRelation()
     {
+   try{
+
+      return $this->save();
+
+   }
+     catch(Exception $e){
 
 
-        return $this->save();
+         Yii::app()->getController()->send(ERROR_FATAL,'You have been added, please do not add a duplicate');
+     }
     }
+protected function beforeDelete(){
+
+
+
+    parent::beforeDelete();
+
+    $this->priUserId = Yii::app()->user->userId;
+
+ return  true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
     protected function  beforeSave()
     {

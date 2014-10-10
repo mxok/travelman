@@ -65,7 +65,7 @@ class RelationComponent {
         $criteria=new CDbCriteria();
         $criteria->addCondition('priUserId='.$userId);
         $criteria->addCondition('type=0');
-        return $this->getArray($this->criteria);
+        return $this->getArray($criteria);
     }
     private function getArray(CDbCriteria $criteria) {
         $result = Relation::model()->findAll($criteria);
