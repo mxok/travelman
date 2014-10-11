@@ -12,10 +12,11 @@ class Message extends CFormModel {
     public $username;
     public $avatar;
     public $receiver;
-    public $text;
-    public $file;
-    public $plan;
-    public $length;//语音时长
+    public $text='';
+    public $file='';
+    public $plan='';
+    public $type='0';
+    public $length='';//语音时长
     public function attributeLabels() {
         return array(
             'sender' =>Yii::t('PushModule.message','sender'),
@@ -44,6 +45,7 @@ class Message extends CFormModel {
         $this->avatar=Yii::app()->user->avatar0;
         $this->sender = Yii::app()->user->userId;
         $jPush = new JPush($platform);
+
         if ($jPush->sendSingle($this->attributes)) {
             Yii::app()->getController()->send(0,Yii::t('UserModule.user', 'success'));
         } else {

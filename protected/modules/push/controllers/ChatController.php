@@ -8,6 +8,11 @@
 //
 
 class ChatController extends Controller {
+
+
+
+    public  $savePath;
+
     public function filters() {
         
         return array(
@@ -15,6 +20,11 @@ class ChatController extends Controller {
                 'application.filters.SessionCheckFilter'
             ) ,
         );
+    }
+
+
+    public   function  init(){
+      $this->savePath=  dirname(dirname(Yii::app()->BasePath)) . '/uploads/';
     }
     public function actionIndex() {
         //未提示客户端
@@ -49,13 +59,23 @@ class ChatController extends Controller {
         $file = array();
         $attach = CUploadedFile::getInstance($model, $attribute);
         if ($attach) {
-            $type = $attach->extensionName;
-            $file['type'] = $type;
+
+          if('jpg'==$attach->extensionName||'png'==$attach->extensionNam||'gif'==$attach->extensionName){
+
+              $model->type='1';
+          }
+
+           if ($attach->extensionName=='amr'||$attach->extensionName == 'caf'){
+
+                $model->type='2';
+
+            }
+
             $preRand = $model->receiver . time() . '.';
-            $imageName = $preRand . $type;
+            $imageName = $preRand . $attach->extensionName;
             $file['origin'] = $imageName;
             $attach->saveAs($this->savePath . $imageName);
-            if (($type!='amr')||($type != 'caf')) {
+            if (($attach->extensionName!='amr')||($attach->extensionName != 'caf')) {
                 $thumb = Yii::app()->thumb;
                 $thumb->image = $this->savePath.$imageName;
                 $size = getimagesize($thumb->image);
@@ -68,11 +88,13 @@ class ChatController extends Controller {
                 $thumb->defaultName = '_' . $preRand;
                 $thumb->createThumb();
                 $thumb->save();
-                $file['thumb'] = $thumb->defaultName . $attach->extensionName;
+                if(UserState::model()->findByPk($model->receiver)->type==0){
+                    $file['thumb'] = $thumb->defaultName . $attach->extensionName;
+                }
             }
             return $file;
         } else {            
-            return null;
+            return '';
         }
     }
 }
