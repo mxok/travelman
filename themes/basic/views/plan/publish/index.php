@@ -58,7 +58,13 @@ $form = $this->beginWidget('CActiveForm', array('htmlOptions'=>array('enctype'=>
             <?php echo $form->error($model, 'startCity') ?>
         </td>
     </tr>
-
+    <tr>
+        <td><?php echo $form->labelEx($model, 'zone') ?></td>
+        <td>
+            <?php echo $form->textField($model, 'zone') ?>
+            <?php echo $form->error($model, 'zone') ?>
+        </td>
+    </tr>
 
 
 

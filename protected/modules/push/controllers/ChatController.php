@@ -37,8 +37,14 @@ class ChatController extends Controller {
         $message = new Message();
         $relation = new Relation();
         if (isset($_POST['Message'])) {
-        	$message->attributes = $_POST['Message'];	
-        	if($message->validate()){        	
+        	$message->attributes = $_POST['Message'];
+
+              if(!empty($message->plan)){
+                  $this->type='3';
+              }
+
+
+                     	if($message->validate()){
         	  $message->file = $this->upload($message);
 
                 if(UserState::model()->findByPk($message->receiver)->type==0){
@@ -60,7 +66,10 @@ class ChatController extends Controller {
         $attach = CUploadedFile::getInstance($model, $attribute);
         if ($attach) {
 
-          if('jpg'==$attach->extensionName||'png'==$attach->extensionNam||'gif'==$attach->extensionName){
+
+
+
+          if('jpg'==$attach->extensionName||'png'==$attach->extensionName||'gif'==$attach->extensionName){
 
               $model->type='1';
           }
@@ -75,7 +84,8 @@ class ChatController extends Controller {
             $imageName = $preRand . $attach->extensionName;
             $file['origin'] = $imageName;
             $attach->saveAs($this->savePath . $imageName);
-            if (($attach->extensionName!='amr')||($attach->extensionName != 'caf')) {
+            if (($attach->extensionName!='amr')&&($attach->extensionName != 'caf')) {
+
                 $thumb = Yii::app()->thumb;
                 $thumb->image = $this->savePath.$imageName;
                 $size = getimagesize($thumb->image);

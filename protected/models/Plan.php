@@ -36,7 +36,7 @@ class Plan extends CActiveRecord
                 'message' => Yii::t('PlanModule.plan', '{attribute} should  not  be black')
             ),
             array(
-                'together,purpose,type,flight,vehicle,postscript',
+                'together,purpose,type,flight,vehicle,postscript,zone',
                 'safe'
             ),
             array(
@@ -102,6 +102,15 @@ class Plan extends CActiveRecord
                 'condition' => 'DATEDIFF(endDate,' . '\'' .date('Y-m-d') . '\''.')>=0',
                 'order' => 'planId DESC'
             ),
+            'local'=>array(
+                'condition' => 'startCity=:currentCity',
+                'params'=>array(':currentCity'=>Yii::app()->user->currentCity),
+
+
+
+
+
+            ),
         );
     }
 
@@ -152,16 +161,33 @@ class Plan extends CActiveRecord
      *
      * 改进：使用延迟绑定，将这个函数写在父类里面
      *返回某个用户所发布的所有计划列表
+     *          主页默认显示的是只在本地的。
      *
+     *
+
+
      * @return CActiveDataProvider $dataProvider  返回CActiveDataProvider对象
      */
     public function getDataProvider(CFormModel & $condition)
     {
-        $dataProvider = new CActiveDataProvider(Plan::model()->unexpired()->near()->with(array('user','state')), array(
-                'pagination' => array(
-                'pageSize' => 20,
-            ),
-        ));
+      $e=  array_filter($condition->attributes);
+     $model=Plan::model()->unexpired()->near();
+        if(empty($e)){
+            $model=$model->local()->with(array('user','state'));
+        }
+       else{
+           $model=$model->with(array('user','state'));
+       }
+        $model=$model->with(array('user','state'));
+        $dataProvider = new CActiveDataProvider($model, array(
+        'pagination' => array(
+            'pageSize' => 20,
+        ),
+    ));
+
+
+
+
         $dataProvider->setCriteria($this->search($condition));
 
         return $dataProvider;
