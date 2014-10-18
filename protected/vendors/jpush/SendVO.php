@@ -64,7 +64,33 @@ class SendVO
 		{
 		    $mes_title = "";
 		    $mes_content = $params["notificationContent"];
-		    $content = array('n_title'=>$mes_title, 'n_content'=>$mes_content, 'n_extras'=>$extras);
+           switch($extras['type']){
+               case '0': $mes_content=$extras['text'];
+                   break;
+               case '1':
+                   $mes_content='给您发送了张图片';
+                   break;
+               case '2':
+                   $mes_content='给您发送了一段语音';
+                   break;
+               case '3':
+                   $mes_content='给您发送了一个计划';
+                   break;
+
+               default:
+                   $mes_content='您有新的消息';
+                   break;
+           }
+
+
+
+
+
+
+
+
+
+             		    $content = array('n_title'=>$mes_title, 'n_content'=>$mes_content, 'n_extras'=>$extras);
 		}
 		else if($params["mes_type"] == 2)
 		{   

@@ -14,11 +14,12 @@ class LoginForm extends CFormModel
     public $latitude;
     public $longitude;
     public $currentCity;
+    public $objectId;
 
 	public function rules()
 	{
 		return array(
-			array('username,password,type','required','message'=>Yii::t('UserModule.user','{attribute} should  not be black')),
+			array('username,password,type,objectId','required','message'=>Yii::t('UserModule.user','{attribute} should  not be black')),
 			array('latitude,longitude,currentCity','safe'),
 			array('password', 'authenticate'),
 		);

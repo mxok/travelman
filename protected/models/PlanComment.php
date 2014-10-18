@@ -25,7 +25,7 @@ class PlanComment    extends  CActiveRecord {
     public  function  rules(){
 
         return array(
-            array('planId,content', 'required', 'message' => '{attribute}不能为空'),
+            array('planId,content','required','message'=>'{attribute}不能为空'),
             array('replyId','safe')
         );
     }
@@ -61,13 +61,10 @@ class PlanComment    extends  CActiveRecord {
 
 
     protected function  beforeSave(){
-
-
            if(parent::beforeSave()){
         $this->userId=Yii::app()->user->userId;
 
            }
-
 
    return  true;
 

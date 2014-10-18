@@ -8,6 +8,7 @@ class RegistrationForm extends CFormModel{
     public $residence;
     public $gender;
     public $avatar0;
+    public $objectId;
     /**
      * @var $type      客户端字段类型,0表示android,1表示ios
      *
@@ -15,7 +16,7 @@ class RegistrationForm extends CFormModel{
     public $type;
     public function rules() {
         return array(
-            array('username,email,password,gender,birthday,type,residence','required','message' =>Yii::t('UserModule.user', '{attribute} should  not  be black')) ,
+            array('username,email,objectId,password,gender,birthday,type,residence','required','message' =>Yii::t('UserModule.user', '{attribute} should  not  be black')) ,
             array('email','email','message' =>Yii::t('UserModule.user', 'email invaild')) ,
             array('email','authenticate'),
             array('gender','in', 'range' => array(0,1)) ,

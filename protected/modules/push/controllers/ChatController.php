@@ -40,7 +40,7 @@ class ChatController extends Controller {
         	$message->attributes = $_POST['Message'];
 
               if(!empty($message->plan)){
-                  $this->type='3';
+                  $message->type='3';
               }
 
 

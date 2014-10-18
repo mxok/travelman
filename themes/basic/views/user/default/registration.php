@@ -27,6 +27,16 @@ echo $form->error($registration, 'username') ?>
             </tr>
             <tr>
                 <td><?php
+                    echo $form->labelEx($registration, 'objectId') ?></td>
+                <td>
+                    <?php
+                    echo $form->textField($registration, 'objectId', array('value' => '0')) ?>
+                    <?php
+                    echo $form->error($registration, 'objectId') ?>
+                </td>
+            </tr>
+            <tr>
+                <td><?php
 echo $form->labelEx($registration, 'email') ?></td>
                 <td>
                     <?php

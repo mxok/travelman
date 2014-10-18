@@ -36,7 +36,7 @@ class Plan extends CActiveRecord
                 'message' => Yii::t('PlanModule.plan', '{attribute} should  not  be black')
             ),
             array(
-                'together,purpose,type,flight,vehicle,postscript,zone',
+                'together,purpose,type,flight,vehicle,postscript,zone,laitude,longitude',
                 'safe'
             ),
             array(
@@ -82,11 +82,11 @@ class Plan extends CActiveRecord
     public function behaviors()
     {
         return array(
-            'CTimestampBehavior' => array(
+                'CTimestampBehavior' => array(
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'createTime',
             ),
-            'NearScopeBehavior' => array(
+                'NearScopeBehavior' => array(
                 'class' => 'ext.behavior.NearScopeBehavior',
                 'latitude' => Yii::app()->user->latitude,
                 'longitude' => Yii::app()->user->longitude,
@@ -103,6 +103,10 @@ class Plan extends CActiveRecord
                 'order' => 'planId DESC'
             ),
             'local'=>array(
+                'condition' => 'city=:currentCity  AND  startCity=:currentCity',
+                'params'=>array(':currentCity'=>Yii::app()->user->currentCity),
+            ),
+            'startThis'=>array(
                 'condition' => 'startCity=:currentCity',
                 'params'=>array(':currentCity'=>Yii::app()->user->currentCity),
 
@@ -170,13 +174,13 @@ class Plan extends CActiveRecord
      */
     public function getDataProvider(CFormModel & $condition)
     {
-      $e=  array_filter($condition->attributes);
-     $model=Plan::model()->unexpired()->near();
-        if(empty($e)){
+//      $e=  array_filter($condition->attributes);
+      $model=Plan::model()->unexpired()->near();
+        if(empty($condition->location)){
             $model=$model->local()->with(array('user','state'));
         }
        else{
-           $model=$model->with(array('user','state'));
+           $model=$model->startThis()->with(array('user','state'));
        }
         $model=$model->with(array('user','state'));
         $dataProvider = new CActiveDataProvider($model, array(

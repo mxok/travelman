@@ -40,13 +40,14 @@
             <?php echo $form->error($loginForm,'longitude') ?>
         
         </td>
+
     </tr>
 
-       <tr>
-        <td><?php echo $form->labelEx($loginForm, 'currentCity') ?></td>
-        <td><?php echo $form->textField($loginForm,'currentCity',array('value'=>"北京"))?>
-            <?php echo $form->error($loginForm,'currentCity') ?>
-        
+    <tr>
+        <td><?php echo $form->labelEx($loginForm, 'objectId') ?></td>
+        <td><?php echo $form->textField($loginForm,'objectId',array('value'=>"0"))?>
+            <?php echo $form->error($loginForm,'objectId') ?>
+
         </td>
     </tr>
      <tr>
